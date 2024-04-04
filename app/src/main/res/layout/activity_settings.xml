@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="24dp">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_back"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/settings"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="6dp"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dark_theme"
+            android:textColor="@color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:letterSpacing="0.01"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+
+
+            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:textColor="@color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:letterSpacing="0.01"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_share"
+            android:layout_gravity="end"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/support"
+            android:textColor="@color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:letterSpacing="0.01"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_support"
+            android:layout_gravity="end"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/forward"
+            android:textColor="@color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:letterSpacing="0.01"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_forward"
+            android:layout_gravity="end"/>
+    </FrameLayout>
+
+
+</LinearLayout>

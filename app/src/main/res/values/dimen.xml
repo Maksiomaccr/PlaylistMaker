@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="Text">22sp</dimen>
+    <dimen name="padding">16dp</dimen>
 </resources>
