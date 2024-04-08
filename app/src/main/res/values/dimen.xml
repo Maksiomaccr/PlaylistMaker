@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="Text">22sp</dimen>
+    <dimen name="text">22sp</dimen>
     <dimen name="padding">16dp</dimen>
+    <dimen name ="buttonRadius">16dp</dimen>
+    <dimen name="textSettings">16sp</dimen>
+
+
 </resources>

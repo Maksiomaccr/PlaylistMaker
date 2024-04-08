@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical">
 
@@ -24,8 +25,9 @@
             android:text="@string/settings"
             android:layout_marginStart="50dp"
             android:layout_marginTop="6dp"
-            android:textSize="22sp"
-            android:textColor="@color/black"/>
+            android:textSize="@dimen/text"
+            android:textColor="@color/black"
+            />
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
@@ -38,10 +40,11 @@
             android:text="@string/dark_theme"
             android:textColor="@color/black"
             android:background="?android:attr/selectableItemBackground"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSettings"
             android:textAllCaps="false"
             android:textAlignment="textStart"
-            android:letterSpacing="0.01"/>
+            android:letterSpacing="0.01"
+            />
 
         <Switch
             android:layout_width="wrap_content"
@@ -62,10 +65,12 @@
             android:text="@string/share"
             android:textColor="@color/black"
             android:background="?android:attr/selectableItemBackground"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSettings"
             android:textAllCaps="false"
             android:textAlignment="textStart"
-            android:letterSpacing="0.01"/>
+            android:letterSpacing="0.01"
+
+            />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -83,7 +88,7 @@
             android:text="@string/support"
             android:textColor="@color/black"
             android:background="?android:attr/selectableItemBackground"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSettings"
             android:textAllCaps="false"
             android:textAlignment="textStart"
             android:letterSpacing="0.01"/>
@@ -104,7 +109,7 @@
             android:text="@string/forward"
             android:textColor="@color/black"
             android:background="?android:attr/selectableItemBackground"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSettings"
             android:textAllCaps="false"
             android:textAlignment="textStart"
             android:letterSpacing="0.01"/>
