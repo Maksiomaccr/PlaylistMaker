@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonText" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text</item>
+        <item name="android:textColor">@color/black_button</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginBottom">@dimen/padding</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/black_button</item>
+        <item name="cornerRadius">@dimen/buttonRadius</item>
+    </style>
+    <style name="ButtonSettings">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textSettings</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+    <style name="SettingsIcon">
+        <item name="android:layout_gravity">end</item>
+    </style>
+    
+
+
+
+</resources>

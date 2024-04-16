@@ -9,4 +9,12 @@
     <string name="support">Написать в поддержку</string>
     <string name="forward">Пользовательское соглашение</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="input_hint">Поиск</string>
+
+
+
+    <string name="url">https://practicum.yandex.ru/android-developer/</string>
+    <string name="message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="url_offer">https://yandex.ru/legal/practicum_offer/</string>
 </resources>
