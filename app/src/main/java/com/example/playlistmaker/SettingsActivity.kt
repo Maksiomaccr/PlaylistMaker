@@ -28,8 +28,9 @@ class SettingsActivity : AppCompatActivity() {
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf("yourEmail@ya.ru"))
             putExtra(Intent.EXTRA_TEXT, getString(R.string.url))
+            startActivity(this)
              }
-            startActivity(shareIntent)
+
         }
 
         support.setOnClickListener{
@@ -38,14 +39,16 @@ class SettingsActivity : AppCompatActivity() {
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("maxcraft.vjugov@ya.ru"))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject))
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.message))
+                startActivity(this)
             }
-            startActivity(supportIntent)
+
         }
         forward.setOnClickListener{
             val forwardIntent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(getString(R.string.url_offer))
+                startActivity(this)
             }
-            startActivity(forwardIntent)
+
         }
     }
 }

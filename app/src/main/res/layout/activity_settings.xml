@@ -35,21 +35,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/padding"
         android:layout_marginBottom="@dimen/padding">
-        <Button
-            android:id="@+id/darkTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/dark_theme"
-            style="@style/ButtonSettings"
-            />
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
+            android:layout_gravity="end|center"
+            android:text="@string/dark_theme"
+            android:paddingStart="@dimen/padding"
+            style="@style/ButtonSettings"
+            tools:ignore="DuplicateClickableBoundsCheck,RtlSymmetry,TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
 
 
-            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+
+
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"

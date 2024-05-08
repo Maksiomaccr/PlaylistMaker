@@ -8,4 +8,5 @@
     <color name="edit_text">#FFFFFF</color>
     <color name="background_search">#1A1B22</color>
     <color name="search_text_tint">#1A1B22</color>
+    <color name="track">#FFF</color>
 </resources>

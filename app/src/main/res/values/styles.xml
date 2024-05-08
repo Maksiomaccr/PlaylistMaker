@@ -28,6 +28,14 @@
     <style name="SettingsIcon">
         <item name="android:layout_gravity">end</item>
     </style>
+
+    <style name="trackList">
+        <item name="android:ellipsize">end</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:lines">1</item>
+        <item name="singleLine">true</item>
+
+    </style>
     
 
 
