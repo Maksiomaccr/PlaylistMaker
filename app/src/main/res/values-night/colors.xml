@@ -9,4 +9,5 @@
     <color name="background_search">#1A1B22</color>
     <color name="search_text_tint">#1A1B22</color>
     <color name="track">#FFF</color>
+    <color name="btn_text">#000</color>
 </resources>

@@ -16,6 +16,7 @@
         <item name="iconTint">@color/black_button</item>
         <item name="cornerRadius">@dimen/buttonRadius</item>
     </style>
+
     <style name="ButtonSettings">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/textSettings</item>
@@ -25,6 +26,7 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
+
     <style name="SettingsIcon">
         <item name="android:layout_gravity">end</item>
     </style>
@@ -35,6 +37,59 @@
         <item name="android:lines">1</item>
         <item name="singleLine">true</item>
 
+    </style>
+
+
+    <style name="ButtonUpdate">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="backgroundTint">@color/black</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/btn_text</item>
+        <item name="android:textSize">@dimen/update_btn_text_size</item>
+        <item name="cornerRadius">@dimen/update_btn_corner_radius</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="WrongText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:paddingHorizontal">@dimen/horizontal_padding</item>
+        <item name="android:paddingVertical">@dimen/padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/wrong_text_size</item>
+        <item name="android:paddingTop">@dimen/padding</item>
+        <item name="android:paddingBottom">@dimen/wrong_text_padding_bottom</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ErrorImage">
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/error_image_padding_top</item>
+        <item name="android:paddingBottom">@dimen/padding</item>
+    </style>
+
+    <style name="SearchBar">
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawableStart">@drawable/ic_baseline_search_</item>
+        <item name="android:inputType">text</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:paddingStart">@dimen/icon_drawable</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black_button</item>
+        <item name="android:textColorHint">@color/search_text_tint</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="android:hint">@string/input_hint</item>
     </style>
     
 
