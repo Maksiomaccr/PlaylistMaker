@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class TrackAdapter(private val tracks: List<Track>): RecyclerView.Adapter<TrackViewHolder> (){
+class TrackAdapter(var tracks: List<Track>, private val searchActivity: SearchActivity?): RecyclerView.Adapter<TrackViewHolder> (){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -23,6 +23,8 @@ return tracks.size
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
 
         holder.bind(tracks[position])
-
+        holder.itemView.setOnClickListener{
+            searchActivity?.updateTrackHistory(position)
+        }
     }
 }

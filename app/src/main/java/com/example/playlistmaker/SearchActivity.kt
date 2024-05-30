@@ -12,8 +12,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +28,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
+const val TRACK_HISTORY = "trackHistory"
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var inputText: EditText
@@ -36,12 +38,19 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var updateButton: MaterialButton
     private lateinit var placeholderText: TextView
     private lateinit var buttonBack: ImageButton
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var historyText: TextView
+    private lateinit var clearHistoryButton: MaterialButton
+    private lateinit var historyRecycler: RecyclerView
+    private lateinit var historyScrollView: ScrollView
     companion object{
-    const val EDIT_TEXT = "editText"
+        const val EDIT_TEXT = "editText"
         val trackList: MutableList<Track> = mutableListOf()
+        var trackListHistory: MutableList<Track> = mutableListOf()
 }
 
-    val trackAdapter = TrackAdapter(trackList)
+    private val trackAdapter = TrackAdapter(trackList, this)
+    private val trackHistoryAdapter = TrackAdapter(trackListHistory, this)
     private var savedText: String? = null
     private val tunesBaseUrl = "https://itunes.apple.com"
     var retrofit = Retrofit.Builder()
@@ -63,14 +72,22 @@ class SearchActivity : AppCompatActivity() {
         errorPlayListImage = findViewById<ImageView>(R.id.wrongImage)
         placeholderText = findViewById<TextView>(R.id.wrongText)
         buttonBack = findViewById<ImageButton>(R.id.back)
+        historyRecycler = findViewById<RecyclerView>(R.id.historyList)
+        historyText = findViewById<TextView>(R.id.historyHint)
+        clearHistoryButton = findViewById<MaterialButton>(R.id.clearHistoryButton)
+        historyScrollView = findViewById<ScrollView>(R.id.historyScroll)
 
-        buttonBack.setOnClickListener{
-            finish()
-        }
+        val sharedPreferences = getSharedPreferences(TRACK_HISTORY, MODE_PRIVATE)
+        searchHistory = SearchHistory(sharedPreferences)
+
+        historyRecycler.layoutManager = LinearLayoutManager(this)
+        historyRecycler.adapter = trackHistoryAdapter
         val recycler = findViewById<RecyclerView>(R.id.track_list)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = trackAdapter
-
+        buttonBack.setOnClickListener{
+            finish()
+        }
         updateButton.setOnClickListener{
             search()
         }
@@ -83,6 +100,26 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
             clearPlaceholders()
         }
+        clearHistoryButton.setOnClickListener{
+            trackListHistory.clear()
+            trackHistoryAdapter.notifyDataSetChanged()
+            searchHistory.save(trackListHistory)
+            showHistory(false)
+        }
+
+        inputText.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus && inputText.text.isNullOrEmpty()){
+                if(trackListHistory.isEmpty()){
+                    trackListHistory = searchHistory.readHistory()
+                    trackHistoryAdapter.tracks = trackListHistory
+                    trackHistoryAdapter.notifyDataSetChanged()
+                }
+                showHistory(trackListHistory.isNotEmpty())
+            }else{
+                showHistory(false)
+            }
+        }
+
 
 
         val searchTextWatcher = object : TextWatcher{
@@ -90,6 +127,9 @@ class SearchActivity : AppCompatActivity() {
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                clearButton.visibility = clearButtonVisibility(s)
+                if (!s.isNullOrEmpty()) {
+                    showHistory(false)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -99,6 +139,7 @@ class SearchActivity : AppCompatActivity() {
         inputText.addTextChangedListener(searchTextWatcher)
         inputText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                inputText.clearFocus()
                 search()
                 true
             }
@@ -106,6 +147,53 @@ class SearchActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateTrackHistory(position: Int){
+        if(!inputText.text.isNullOrEmpty()){
+            if(trackListHistory.size > 0){
+                var isExit = false
+                var existsElement: Track? = null
+                trackListHistory.forEach { element ->
+                    if(element.trackId == trackList[position].trackId){
+                        isExit = true
+                        existsElement = element
+                    }
+                }
+                if(isExit){
+                    trackListHistory.remove(existsElement)
+                }
+                if(trackListHistory.size >= 10){
+                    trackListHistory.removeLast()
+                }
+            }
+            trackListHistory.add(0, trackList[position])
+            trackHistoryAdapter.notifyDataSetChanged()
+            searchHistory.save(trackListHistory)
+        }
+        else{
+            if(trackListHistory.size > 1){
+                val element = trackListHistory[position]
+                trackListHistory.removeAt(position)
+                trackListHistory.add(0, element)
+                trackHistoryAdapter.notifyDataSetChanged()
+                searchHistory.save(trackListHistory)
+            }
+        }
+    }
+    fun showHistory(show: Boolean){
+        historyText.visibility = elementsVisibility(show)
+        historyScrollView.visibility = elementsVisibility(show)
+        clearHistoryButton.visibility = elementsVisibility(show)
+    }
+
+    private fun elementsVisibility(bool: Boolean): Int{
+        return if(bool){
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
     }
     private fun search(){
         if(inputText.text.isNotEmpty()){

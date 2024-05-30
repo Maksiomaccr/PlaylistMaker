@@ -22,5 +22,7 @@
     <string name="update_text">Обновить</string>
     <string name="not_found">Ничего не нашлось</string>
     <string name="wrong">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="history_search">Вы искали</string>
+    <string name="clear_history_button_text">Очистить историю</string>
 
 </resources>

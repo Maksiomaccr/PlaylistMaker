@@ -3,14 +3,17 @@ package com.example.playlistmaker
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Switch
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -19,6 +22,18 @@ class SettingsActivity : AppCompatActivity() {
         val share = findViewById<Button>(R.id.share)
         val support = findViewById<Button>(R.id.support)
         val forward = findViewById<Button>(R.id.forward)
+        val themeSwitcher = findViewById<Switch>(R.id.theme_switch)
+
+        themeSwitcher.isChecked = darkTheme
+        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+
+           (applicationContext as App).switchTheme(checked)
+            darkTheme = checked
+            (applicationContext as App).switchSave(checked)
+
+        }
+
+
         back.setOnClickListener{
             finish()
         }
