@@ -37,7 +37,7 @@
         android:layout_marginEnd="@dimen/padding"
         android:layout_marginBottom="@dimen/padding">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/theme_switch"
             style="@style/ButtonSettings"
             android:layout_width="match_parent"

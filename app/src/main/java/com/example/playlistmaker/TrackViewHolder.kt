@@ -29,7 +29,7 @@ init {
         artistName.text = track.artistName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
 
-
+        artistName.requestLayout()
         val image = itemView.findViewById<ImageView>(R.id.track_image)
         Glide
             .with(itemView.context)

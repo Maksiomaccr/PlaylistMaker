@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
@@ -22,13 +23,13 @@ class SettingsActivity : AppCompatActivity() {
         val share = findViewById<Button>(R.id.share)
         val support = findViewById<Button>(R.id.support)
         val forward = findViewById<Button>(R.id.forward)
-        val themeSwitcher = findViewById<Switch>(R.id.theme_switch)
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switch)
 
-        themeSwitcher.isChecked = darkTheme
-        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+        themeSwitcher.isChecked = (applicationContext as App).darkTheme
+        themeSwitcher.setOnCheckedChangeListener { _, checked ->
 
-           (applicationContext as App).switchTheme(checked)
-            darkTheme = checked
+            (applicationContext as App).switchTheme(checked)
+
             (applicationContext as App).switchSave(checked)
 
         }
@@ -66,4 +67,5 @@ class SettingsActivity : AppCompatActivity() {
 
         }
     }
+
 }
