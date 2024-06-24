@@ -34,7 +34,8 @@ init {
         Glide
             .with(itemView.context)
             .load(track.artworkUrl100)
-            .placeholder(R.drawable.placeholder)
+            .placeholder(R.drawable.placeholder_playlist)
+            .error(R.drawable.placeholder_playlist)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .fitCenter()

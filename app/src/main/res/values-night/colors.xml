@@ -10,4 +10,9 @@
     <color name="search_text_tint">#1A1B22</color>
     <color name="track">#FFF</color>
     <color name="btn_text">#000</color>
+    <color name="background_media_player">#1A1B22</color>
+    <color name="text_media">#FFF</color>
+    <color name="info_text">#AEAFB4</color>
+    <color name="btn_play">#FFF</color>
+    <color name="btn_add_on_audio_player">#C5C6C7</color>
 </resources>

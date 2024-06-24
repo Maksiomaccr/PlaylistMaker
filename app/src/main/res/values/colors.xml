@@ -11,4 +11,9 @@
     <color name="search_text_tint">#AEAFB4</color>
     <color name="track">#AEAFB4</color>
     <color name="btn_text">#FFF</color>
+    <color name="background_media_player">#FFF</color>
+    <color name="text_media">#1A1B22</color>
+    <color name="info_text">#AEAFB4</color>
+    <color name="btn_play">#1A1B22</color>
+    <color name="btn_add_on_audio_player">#1A1B22</color>
 </resources>

@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -152,6 +153,7 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     fun updateTrackHistory(position: Int){
         if(!inputText.text.isNullOrEmpty()){
+
             if(trackListHistory.size > 0){
                 var isExit = false
                 var existsElement: Track? = null
@@ -171,6 +173,7 @@ class SearchActivity : AppCompatActivity() {
             trackListHistory.add(0, trackList[position])
             trackHistoryAdapter.notifyDataSetChanged()
             searchHistory.save(trackListHistory)
+            openAudioPlayer(trackList[position])
         }
         else{
             if(trackListHistory.size > 1){
@@ -179,7 +182,9 @@ class SearchActivity : AppCompatActivity() {
                 trackListHistory.add(0, element)
                 trackHistoryAdapter.notifyDataSetChanged()
                 searchHistory.save(trackListHistory)
+
             }
+            openAudioPlayer(trackListHistory[position])
         }
     }
     fun showHistory(show: Boolean){
@@ -267,6 +272,18 @@ class SearchActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+    private fun openAudioPlayer(track: Track) {
+        val displayIntent = Intent(this, AudioPlayerActivity::class.java)
+        displayIntent.putExtra("trackName", track.trackName)
+        displayIntent.putExtra("artistName", track.artistName)
+        displayIntent.putExtra("trackTimeMillis", track.trackTime)
+        displayIntent.putExtra("artworkUrl100", track.artworkUrl100)
+        displayIntent.putExtra("collectionName", track.collectionName)
+        displayIntent.putExtra("releaseDate", track.releaseDate)
+        displayIntent.putExtra("primaryGenreName", track.primaryGenreName)
+        displayIntent.putExtra("country", track.country)
+        startActivity(displayIntent)
     }
 
 
