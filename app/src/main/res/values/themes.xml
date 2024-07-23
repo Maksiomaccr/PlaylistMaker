@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
+
+    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker">
+
+        <item name="colorPrimary">@color/background_main</item>
+
+        <item name="android:statusBarColor">@color/background_main</item>
+    </style>
+</resources>

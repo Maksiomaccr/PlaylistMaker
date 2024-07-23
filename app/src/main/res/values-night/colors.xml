@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="background_main">#1A1B22</color>
+    <color name="background_settings">#1A1B22</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="black_button">#FF000000</color>
+    <color name="ic_color">#FFFFFF</color>
+    <color name="edit_text">#FFFFFF</color>
+    <color name="background_search">#1A1B22</color>
+    <color name="search_text_tint">#1A1B22</color>
+    <color name="track">#FFF</color>
+    <color name="btn_text">#000</color>
+    <color name="background_media_player">#1A1B22</color>
+    <color name="text_media">#FFF</color>
+    <color name="info_text">#AEAFB4</color>
+    <color name="btn_play">#FFF</color>
+    <color name="btn_add_on_audio_player">#C5C6C7</color>
+</resources>

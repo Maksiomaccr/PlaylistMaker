@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="black_button">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background_search">#FFFFFF</color>
+    <color name="background_main">#3772E7</color>
+    <color name="background_settings">#3772E7</color>
+    <color name="ic_color">#AEAFB4</color>
+    <color name="edit_text">#E6E8EB</color>
+    <color name="search_text_tint">#AEAFB4</color>
+    <color name="track">#AEAFB4</color>
+    <color name="btn_text">#FFF</color>
+    <color name="background_media_player">#FFF</color>
+    <color name="text_media">#1A1B22</color>
+    <color name="info_text">#AEAFB4</color>
+    <color name="btn_play">#1A1B22</color>
+    <color name="btn_add_on_audio_player">#1A1B22</color>
+    <color name="cursor_color">#3772E7</color>
+    <color name="progress_bar_color">#3772E7</color>
+</resources>

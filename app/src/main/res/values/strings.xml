@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">PlaylistMaker</string>
+    <string name="playlist_maker">Playlist Maker</string>
+    <string name="search">Поиск</string>
+    <string name="media">Медиатека</string>
+    <string name="settings">Настройки</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="share">Поделиться приложением</string>
+    <string name="support">Написать в поддержку</string>
+    <string name="forward">Пользовательское соглашение</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="input_hint">Поиск</string>
+
+
+    <string name="url">https://practicum.yandex.ru/android-developer/</string>
+    <string name="message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="url_offer">https://yandex.ru/legal/practicum_offer/</string>
+
+
+    <string name="update_text">Обновить</string>
+    <string name="not_found">Ничего не нашлось</string>
+    <string name="wrong">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="history_search">Вы искали</string>
+    <string name="clear_history_button_text">Очистить историю</string>
+
+    <string name="time_text">Длительность</string>
+    <string name="album_text">Альбом</string>
+    <string name="year_text">Год</string>
+    <string name="genre_text">Жанр</string>
+    <string name="country_text">Страна</string>
+    <string name="track_name_text">Yesterday (Remastered 2009)</string>
+    <string name="artist_text">The Beatles</string>
+    <string name="time_val_text">5:35</string>
+    <string name="album_val_text">Yesterday (Remastered 2009)</string>
+    <string name="year_val_text">1965</string>
+    <string name="genre_val_text">Rock</string>
+    <string name="country_val_text">Великобритания</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+
+</resources>
