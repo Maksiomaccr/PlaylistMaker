@@ -50,6 +50,8 @@ class SearchActivity : AppCompatActivity() {
         var trackListHistory: MutableList<Track> = mutableListOf()
     }
 
+
+
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
     private val searchRunnable = Runnable { search() }
@@ -71,6 +73,7 @@ class SearchActivity : AppCompatActivity() {
         }
         return current
     }
+
     @SuppressLint("MissingInflatedId", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -266,6 +269,10 @@ class SearchActivity : AppCompatActivity() {
         savedText = savedInstanceState.getString(EDIT_TEXT)
 
     }
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
     private fun showErrorText(text: String) {
         if (text.isNotEmpty()) {
             placeholderText.visibility = View.VISIBLE
@@ -305,11 +312,9 @@ class SearchActivity : AppCompatActivity() {
             displayIntent.putExtra("previewUrl", track.previewUrl)
             startActivity(displayIntent)
         }
+
     }
-    private fun searchDebounce() {
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-    }
+
 
 
 }

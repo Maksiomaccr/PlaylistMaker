@@ -26,8 +26,6 @@ class AudioPlayerActivity: AppCompatActivity() {
     private lateinit var genre: TextView
     private lateinit var country: TextView
     private lateinit var trackDuration: TextView
-
-
     private lateinit var btnPlay: ImageButton
     private lateinit var btnPause: ImageButton
     private var mediaPlayer = MediaPlayer()
@@ -40,10 +38,8 @@ class AudioPlayerActivity: AppCompatActivity() {
         private const val STATE_PAUSED = 3
 
         private const val DELAY = 1000L
-
         private const val PREVIEW_TIME = 30_000L
     }
-
     private var playerState = STATE_DEFAULT
     private var mainThreadHandler: Handler? = null
     private var elapsedTime: Long = 0L
@@ -75,6 +71,8 @@ class AudioPlayerActivity: AppCompatActivity() {
             }
         }
     }
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,8 +80,8 @@ class AudioPlayerActivity: AppCompatActivity() {
 
         btnPlay = findViewById(R.id.playButton)
         btnPause = findViewById(R.id.pauseButton)
-
         mainThreadHandler = Handler(Looper.getMainLooper())
+
         backBtn = findViewById(R.id.back)
         backBtn.setOnClickListener{
             finish()
@@ -192,5 +190,6 @@ class AudioPlayerActivity: AppCompatActivity() {
         btnPause.visibility = View.GONE
         playerState = STATE_PAUSED
     }
+
 
 }
