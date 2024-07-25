@@ -124,12 +124,9 @@
 
     </FrameLayout>
     <ProgressBar android:id="@+id/progressBar"
-        android:layout_width="@dimen/progress_bar_size"
-        android:layout_height="@dimen/progress_bar_size"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/progress_bar_margin_top"
-        android:indeterminateTint="@color/progress_bar_color"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        style="@style/progress_bar_style"/>
     <TextView
         android:id="@+id/wrongText"
         style="@style/WrongText"

@@ -43,18 +43,26 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyScrollView: ScrollView
     private lateinit var progressBar: ProgressBar
     companion object{
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
         const val EDIT_TEXT = "editText"
         val trackList: MutableList<Track> = mutableListOf()
         var trackListHistory: MutableList<Track> = mutableListOf()
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+    private var isClickAllowed = true
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
     }
 
 
-
-    private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
-    private val searchRunnable = Runnable { search() }
     private val trackAdapter = TrackAdapter(trackList, this)
     private val trackHistoryAdapter = TrackAdapter(trackListHistory, this)
     private var savedText: String? = null
@@ -65,13 +73,11 @@ class SearchActivity : AppCompatActivity() {
         .build()
     private val iTunesService = retrofit.create(iTunesApi::class.java)
 
-    private fun clickDebounce() : Boolean {
-        val current = isClickAllowed
-        if (isClickAllowed) {
-            isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
-        }
-        return current
+    private val searchRunnable = Runnable { search() }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
     @SuppressLint("MissingInflatedId", "NotifyDataSetChanged")
@@ -217,17 +223,22 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun search(){
         if(inputText.text.isNotEmpty()){
+
             historyRecycler.visibility = View.GONE
+
             progressBar.visibility = View.VISIBLE
+
+
             iTunesService.search(inputText.text.toString()).enqueue(object : retrofit2.Callback<TrackResponse>{
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
                     call: Call<TrackResponse>,
                     response: Response<TrackResponse>
                 )
-                {
+                {   progressBar.visibility = View.GONE
+
                     historyRecycler.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
+
                     if(response.code() == 200){
                         trackList.clear()
                         errorPlayListImage.visibility = View.GONE
@@ -252,8 +263,11 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
+
                     progressBar.visibility = View.GONE
+
                     showErrorText(getString(R.string.wrong))
+
                     errorPlayListImage.visibility = View.VISIBLE
                     updateButton.visibility = View.VISIBLE
                 }
@@ -269,10 +283,7 @@ class SearchActivity : AppCompatActivity() {
         savedText = savedInstanceState.getString(EDIT_TEXT)
 
     }
-    private fun searchDebounce() {
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-    }
+
     private fun showErrorText(text: String) {
         if (text.isNotEmpty()) {
             placeholderText.visibility = View.VISIBLE
@@ -309,6 +320,7 @@ class SearchActivity : AppCompatActivity() {
             displayIntent.putExtra("releaseDate", track.releaseDate)
             displayIntent.putExtra("primaryGenreName", track.primaryGenreName)
             displayIntent.putExtra("country", track.country)
+
             displayIntent.putExtra("previewUrl", track.previewUrl)
             startActivity(displayIntent)
         }

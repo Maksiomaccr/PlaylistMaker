@@ -137,5 +137,11 @@
         <item name="android:ellipsize">end</item>
         <item name="android:layout_marginStart">@dimen/audio_player_info_text_margin</item>
     </style>
+    <style name="progress_bar_style">
+        <item name="android:layout_width">@dimen/progress_bar_size</item>
+        <item name="android:layout_height">@dimen/progress_bar_size</item>
+        <item name="android:indeterminateTint">@color/progress_bar_color</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 
 </resources>
