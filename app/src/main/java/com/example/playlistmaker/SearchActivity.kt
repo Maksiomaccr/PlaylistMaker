@@ -27,6 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 const val TRACK_HISTORY = "trackHistory"
+
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var inputText: EditText
@@ -42,18 +43,21 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyRecycler: RecyclerView
     private lateinit var historyScrollView: ScrollView
     private lateinit var progressBar: ProgressBar
-    companion object{
+    private lateinit var recycler: RecyclerView
+
+    companion object {
         const val EDIT_TEXT = "editText"
         val trackList: MutableList<Track> = mutableListOf()
         var trackListHistory: MutableList<Track> = mutableListOf()
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
+
     private var isClickAllowed = true
 
     private val handler = Handler(Looper.getMainLooper())
 
-    private fun clickDebounce() : Boolean {
+    private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
@@ -97,23 +101,22 @@ class SearchActivity : AppCompatActivity() {
         clearHistoryButton = findViewById<MaterialButton>(R.id.clearHistoryButton)
         historyScrollView = findViewById<ScrollView>(R.id.historyScroll)
         progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        recycler = findViewById<RecyclerView>(R.id.track_list)
 
         val sharedPreferences = getSharedPreferences(TRACK_HISTORY, MODE_PRIVATE)
         searchHistory = SearchHistory(sharedPreferences)
 
         historyRecycler.layoutManager = LinearLayoutManager(this)
         historyRecycler.adapter = trackHistoryAdapter
-        val recycler = findViewById<RecyclerView>(R.id.track_list)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = trackAdapter
-        buttonBack.setOnClickListener{
+        buttonBack.setOnClickListener {
             finish()
         }
-        updateButton.setOnClickListener{
+        updateButton.setOnClickListener {
             search()
         }
-        clearButton.setOnClickListener{
-                v ->
+        clearButton.setOnClickListener { v ->
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(v.windowToken, 0)
             inputText.setText("")
@@ -121,7 +124,7 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
             clearPlaceholders()
         }
-        clearHistoryButton.setOnClickListener{
+        clearHistoryButton.setOnClickListener {
             trackListHistory.clear()
             trackHistoryAdapter.notifyDataSetChanged()
             searchHistory.save(trackListHistory)
@@ -129,23 +132,23 @@ class SearchActivity : AppCompatActivity() {
         }
 
         inputText.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus && inputText.text.isNullOrEmpty()){
-                if(trackListHistory.isEmpty()){
+            if (hasFocus && inputText.text.isNullOrEmpty()) {
+                if (trackListHistory.isEmpty()) {
                     trackListHistory = searchHistory.readHistory()
                     trackHistoryAdapter.tracks = trackListHistory
                     trackHistoryAdapter.notifyDataSetChanged()
                 }
                 showHistory(trackListHistory.isNotEmpty())
-            }else{
+            } else {
                 showHistory(false)
             }
         }
 
 
-
         val searchTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
                 if (!s.isNullOrEmpty()) {
@@ -172,22 +175,22 @@ class SearchActivity : AppCompatActivity() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateTrackHistory(position: Int){
-        if(!inputText.text.isNullOrEmpty()){
+    fun updateTrackHistory(position: Int) {
+        if (!inputText.text.isNullOrEmpty()) {
 
-            if(trackListHistory.size > 0){
+            if (trackListHistory.size > 0) {
                 var isExit = false
                 var existsElement: Track? = null
                 trackListHistory.forEach { element ->
-                    if(element.trackId == trackList[position].trackId){
+                    if (element.trackId == trackList[position].trackId) {
                         isExit = true
                         existsElement = element
                     }
                 }
-                if(isExit){
+                if (isExit) {
                     trackListHistory.remove(existsElement)
                 }
-                if(trackListHistory.size >= 10){
+                if (trackListHistory.size >= 10) {
                     trackListHistory.removeLast()
                 }
             }
@@ -195,9 +198,8 @@ class SearchActivity : AppCompatActivity() {
             trackHistoryAdapter.notifyDataSetChanged()
             searchHistory.save(trackListHistory)
             openAudioPlayer(trackList[position])
-        }
-        else{
-            if(trackListHistory.size > 1){
+        } else {
+            if (trackListHistory.size > 1) {
                 val element = trackListHistory[position]
                 trackListHistory.removeAt(position)
                 trackListHistory.add(0, element)
@@ -208,76 +210,80 @@ class SearchActivity : AppCompatActivity() {
             openAudioPlayer(trackListHistory[position])
         }
     }
-    fun showHistory(show: Boolean){
+
+    fun showHistory(show: Boolean) {
         historyText.visibility = elementsVisibility(show)
         historyScrollView.visibility = elementsVisibility(show)
         clearHistoryButton.visibility = elementsVisibility(show)
     }
 
-    private fun elementsVisibility(bool: Boolean): Int{
-        return if(bool){
+    private fun elementsVisibility(bool: Boolean): Int {
+        return if (bool) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }
-    private fun search(){
-        if(inputText.text.isNotEmpty()){
 
-            historyRecycler.visibility = View.GONE
+    private fun search() {
+        if (inputText.text.isNotEmpty()) {
 
             progressBar.visibility = View.VISIBLE
+            historyRecycler.visibility = View.GONE
+            recycler.visibility = View.GONE
 
+            iTunesService.search(inputText.text.toString())
+                .enqueue(object : retrofit2.Callback<TrackResponse> {
+                    @SuppressLint("NotifyDataSetChanged")
+                    override fun onResponse(
+                        call: Call<TrackResponse>,
+                        response: Response<TrackResponse>
+                    ) {
+                        progressBar.visibility = View.GONE
+                        recycler.visibility = View.VISIBLE
+                        historyRecycler.visibility = View.VISIBLE
 
-            iTunesService.search(inputText.text.toString()).enqueue(object : retrofit2.Callback<TrackResponse>{
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(
-                    call: Call<TrackResponse>,
-                    response: Response<TrackResponse>
-                )
-                {   progressBar.visibility = View.GONE
+                        if (response.code() == 200) {
+                            trackList.clear()
+                            errorPlayListImage.visibility = View.GONE
+                            updateButton.visibility = View.GONE
+                            if (response.body()?.results?.isNotEmpty() == true) {
+                                trackList.addAll(response.body()?.results!!)
+                                trackAdapter.notifyDataSetChanged()
+                            }
+                            if (trackList.isEmpty()) {
+                                showErrorText(getString(R.string.not_found))
+                                notFoundTrackImage.visibility = View.VISIBLE
+                            } else {
+                                showErrorText("")
+                                notFoundTrackImage.visibility = View.GONE
+                            }
 
-                    historyRecycler.visibility = View.VISIBLE
-
-                    if(response.code() == 200){
-                        trackList.clear()
-                        errorPlayListImage.visibility = View.GONE
-                        updateButton.visibility = View.GONE
-                        if(response.body()?.results?.isNotEmpty() == true){
-                            trackList.addAll(response.body()?.results!!)
-                            trackAdapter.notifyDataSetChanged()
+                        } else {
+                            showErrorText(getString(R.string.wrong))
+                            errorPlayListImage.visibility = View.VISIBLE
+                            updateButton.visibility = View.VISIBLE
                         }
-                        if(trackList.isEmpty()){
-                            showErrorText(getString(R.string.not_found))
-                            notFoundTrackImage.visibility = View.VISIBLE
-                        }else{
-                            showErrorText("")
-                            notFoundTrackImage.visibility = View.GONE
-                        }
+                    }
 
-                    }else{
+                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
+
+                        progressBar.visibility = View.GONE
+
                         showErrorText(getString(R.string.wrong))
+
                         errorPlayListImage.visibility = View.VISIBLE
                         updateButton.visibility = View.VISIBLE
                     }
-                }
-
-                override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-
-                    progressBar.visibility = View.GONE
-
-                    showErrorText(getString(R.string.wrong))
-
-                    errorPlayListImage.visibility = View.VISIBLE
-                    updateButton.visibility = View.VISIBLE
-                }
-            })
+                })
         }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(EDIT_TEXT, savedText)
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         savedText = savedInstanceState.getString(EDIT_TEXT)
@@ -295,12 +301,14 @@ class SearchActivity : AppCompatActivity() {
             placeholderText.visibility = View.GONE
         }
     }
-    private fun clearPlaceholders(){
+
+    private fun clearPlaceholders() {
         errorPlayListImage.visibility = View.GONE
         notFoundTrackImage.visibility = View.GONE
         updateButton.visibility = View.GONE
         placeholderText.visibility = View.GONE
     }
+
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -310,7 +318,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun openAudioPlayer(track: Track) {
-        if(clickDebounce()){
+        if (clickDebounce()) {
             val displayIntent = Intent(this, AudioPlayerActivity::class.java)
             displayIntent.putExtra("trackName", track.trackName)
             displayIntent.putExtra("artistName", track.artistName)
@@ -327,6 +335,11 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(searchRunnable)
+    }
 
 }
+
+
