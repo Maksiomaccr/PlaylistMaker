@@ -29,7 +29,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val TRACK_HISTORY = "trackHistory"
 
 class SearchActivity : AppCompatActivity() {
-
+    companion object {
+        const val EDIT_TEXT = "editText"
+        val trackList: MutableList<Track> = mutableListOf()
+        var trackListHistory: MutableList<Track> = mutableListOf()
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
     private lateinit var inputText: EditText
     private lateinit var clearButton: ImageButton
     private lateinit var notFoundTrackImage: ImageView
@@ -45,14 +51,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var recycler: RecyclerView
 
-    companion object {
-        const val EDIT_TEXT = "editText"
-        val trackList: MutableList<Track> = mutableListOf()
-        var trackListHistory: MutableList<Track> = mutableListOf()
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
-    }
-
     private var isClickAllowed = true
 
     private val handler = Handler(Looper.getMainLooper())
@@ -65,7 +63,6 @@ class SearchActivity : AppCompatActivity() {
         }
         return current
     }
-
 
     private val trackAdapter = TrackAdapter(trackList, this)
     private val trackHistoryAdapter = TrackAdapter(trackListHistory, this)
@@ -144,7 +141,6 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-
         val searchTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -170,8 +166,6 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
-
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -231,6 +225,11 @@ class SearchActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             historyRecycler.visibility = View.GONE
             recycler.visibility = View.GONE
+            notFoundTrackImage.visibility = View.GONE
+            errorPlayListImage.visibility = View.GONE
+            placeholderText.visibility = View.GONE
+            updateButton.visibility = View.GONE
+
 
             iTunesService.search(inputText.text.toString())
                 .enqueue(object : retrofit2.Callback<TrackResponse> {
@@ -290,6 +289,12 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(searchRunnable)
+        handler.removeCallbacks { isClickAllowed = true }
+    }
+
     private fun showErrorText(text: String) {
         if (text.isNotEmpty()) {
             placeholderText.visibility = View.VISIBLE
@@ -335,10 +340,7 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(searchRunnable)
-    }
+
 
 }
 
