@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_media_player"
     android:orientation="vertical"
-    tools:context=".AudioPlayerActivity">
+    tools:context=".presentation.ui.audioplayer.AudioPlayerActivity">
 
     <ImageButton
         android:id="@+id/back"
@@ -161,7 +161,7 @@
                 app:layout_constraintTop_toBottomOf="@id/genreStr" />
 
             <TextView
-                android:id="@+id/trackTime"
+                android:id="@+id/track_time"
                 style="@style/InfoValueTrack"
                 app:layout_constraintBaseline_toBaselineOf="@+id/trackTimeStr"
                 app:layout_constraintEnd_toEndOf="@id/rightGuideline"
