@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_search"
     android:orientation="vertical"
-    tools:context=".presentation.ui.tracks.SearchActivity">
+    tools:context=".SearchActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -55,43 +55,29 @@
             tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/track_layout"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/progress_bar_style"
+        android:layout_marginTop="@dimen/progress_bar_margin_top"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/historyHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/error_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/error_placeholder_margin_top"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/wrongMessage"
-            style="@style/WrongMessage"
-            android:text="@string/not_found"
-            android:drawablePadding="@dimen/drawable_padding_from_text"
-            android:drawableTop="@drawable/not_found_track"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/update_button"
-            style="@style/ButtonUpdate"
-            android:text="@string/update_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wrongMessage" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_marginTop="@dimen/search_history_margin_top"
+        android:background="@color/background_search"
+        android:fontFamily="@font/ys_display_medium"
+        android:padding="@dimen/search_history_padding"
+        android:text="@string/history_search"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/search_history_text"
+        android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/history_layout"
+        android:id="@+id/historyScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -99,31 +85,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|top"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/historyHint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/search_history_margin_top"
-                android:background="@color/background_search"
-                android:fontFamily="@font/ys_display_medium"
-                android:padding="@dimen/search_history_padding"
-                android:text="@string/history_search"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/search_history_text"
-                />
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/history_list"
+                android:id="@+id/historyList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:reverseLayout="true"
-                app:stackFromEnd="true"
+                android:layout_height="wrap_content"
                 tools:itemCount="10" />
 
             <com.google.android.material.button.MaterialButton
@@ -138,15 +106,47 @@
                 android:text="@string/clear_history_button_text"
                 android:textAllCaps="false"
                 android:textSize="@dimen/clear_history_button_text_size"
+                android:visibility="gone"
                 app:cornerRadius="@dimen/update_btn_corner_radius" />
 
         </LinearLayout>
+
     </ScrollView>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/progress_bar_style"
-        android:layout_marginTop="@dimen/progress_bar_margin_top"
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/notFoundTrack"
+            style="@style/ErrorImage"
+            android:src="@drawable/not_found_track" />
+
+
+        <ImageView
+            android:id="@+id/wrongImage"
+            style="@style/ErrorImage"
+            android:src="@drawable/track_error" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/wrongText"
+        style="@style/WrongText"
+        android:text=""
         android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/update_button"
+        style="@style/ButtonUpdate"
+        android:text="@string/update_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

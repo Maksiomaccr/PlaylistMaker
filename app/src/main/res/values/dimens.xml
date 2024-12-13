@@ -33,9 +33,7 @@
     <dimen name="album_large_image_radius">8dp</dimen>
     <dimen name="audio_player_info_text_size">13sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="progress_bar_margin_top">140dp</dimen>
+    <dimen name="progress_bar_margin_top">100dp</dimen>
     <dimen name="progress_bar_size">44dp</dimen>
-    <dimen name="error_placeholder_margin_top">100dp</dimen>
-    <dimen name="drawable_padding_from_text">6dp</dimen>
-    <dimen name="margin_top_update_button">30dp</dimen>
+
 </resources>

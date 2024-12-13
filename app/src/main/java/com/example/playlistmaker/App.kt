@@ -1,20 +1,24 @@
 package com.example.playlistmaker
 
 import android.app.Application
-import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.creator.Creator
+
+const val DARK_THEME = "is_dark_theme"
+const val PREFERENCES_THEME = "theme_pref"
 
 class App: Application() {
-
-    companion object{
-        var darkTheme: Boolean = false
-    }
-
+    var darkTheme = false
+    private lateinit var checked: SharedPreferences.OnSharedPreferenceChangeListener
     override fun onCreate() {
         super.onCreate()
-        Creator.initAppContext(applicationContext)
-        darkTheme = Creator.provideNightThemeInteractor().getNightMode().isNight
+
+        val sharedPref = getSharedPreferences(PREFERENCES_THEME, MODE_PRIVATE)
+        var stringFromSharedPrefs = sharedPref.getBoolean(DARK_THEME, false)
+        darkTheme = when(stringFromSharedPrefs){
+            false -> false
+            true -> true
+        }
         switchTheme(darkTheme)
     }
     fun switchTheme(darkThemeEnabled: Boolean) {
@@ -28,6 +32,11 @@ class App: Application() {
         )
     }
 
+
+    fun switchSave(darkThemeEnabled: Boolean){
+        val sharedPref: SharedPreferences = getSharedPreferences(PREFERENCES_THEME, MODE_PRIVATE)
+        sharedPref.edit().putBoolean(DARK_THEME, darkThemeEnabled).apply()
+    }
 
 
 }
