@@ -64,12 +64,12 @@
                     android:src="@drawable/dot" />
 
                 <TextView
-                    android:id="@+id/track_time"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/track"
                     android:textSize="@dimen/track_item_bottom"
-                    tools:text="00:00"
+                    tools:text="0:00"
                     style="@style/trackList"
                     />
             </LinearLayout>
