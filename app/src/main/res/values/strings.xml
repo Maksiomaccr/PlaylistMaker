@@ -37,6 +37,7 @@
     <string name="genre_val_text">Rock</string>
     <string name="country_val_text">Великобритания</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="email">maxcraft.vjugov@ya.ru</string>
 
 
 </resources>
